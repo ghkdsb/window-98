@@ -1,0 +1,23 @@
+<svg width="44" height="38" viewBox="0 0 44 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_437_117)">
+<g filter="url(#filter0_i_437_117)">
+<ellipse cx="22" cy="19" rx="22" ry="19" fill="#F7F7F7"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_i_437_117" x="-6" y="-7" width="50" height="45" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="1" operator="erode" in="SourceAlpha" result="effect1_innerShadow_437_117"/>
+<feOffset dx="-6" dy="-7"/>
+<feGaussianBlur stdDeviation="4.9"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_437_117"/>
+</filter>
+<clipPath id="clip0_437_117">
+<rect width="44" height="38" fill="white"/>
+</clipPath>
+</defs>
+</svg>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .eye-container {
+            position: relative;
+            width: 400px;
+            /* 눈 크기 조절 */
+            margin: 50px auto;
+        }
+
+        /* 흰자 PNG 배경 */
+        .eye-bg {
+            width: 100%;
+            display: block;
+        }
+
+        /* 모든 SVG 요소는 겹쳐놓기 */
+        .eye-container svg {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        /* 🔵 눈동자 좌우로 흔들림 애니메이션 */
+        #pupil {
+            animation: moveEye 3s infinite ease-in-out;
+            transform-origin: center center;
+        }
+
+        @keyframes moveEye {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(-10px);
+            }
+
+            /* 좌우 움직임 폭 조절 */
+        }
+
+        /* 🔥 윗속눈썹 + 눈꺼풀 내려오는 깜빡임 */
+        #upper-lash {
+            transform-origin: center top;
+            animation: blink 3s infinite;
+        }
+
+        /* 눈꺼풀 (새 path) */
+        #eyelid-top {
+            transform-origin: top center;
+            /* 핵심!!! */
+            animation: blink-eyelid 3s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            90%,
+            100% {
+                transform: translateY(0) scaleY(1);
+            }
+
+            50% {
+                transform: translateY(805px) scaleY(-1);
+            }
+        }
+
+        /* 눈꺼풀: 이동 + 뒤집기 + 아래로 늘어나기 */
+        @keyframes blink-eyelid {
+
+            0%,
+            90%,
+            100% {
+                transform: translateY(0) scaleY(1);
+            }
+
+            50% {
+                transform: translateY(100px) scaleY(-2);
+                /* 아래로 더 길어지는 부분 */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="eye-container">
+
+        <!-- ⬜ 흰자 PNG 넣기 -->
+        <img class="eye-bg" src="./img/눈배경.png" alt="eye white" /> <!-- 경로 수정 -->
+
+        <!-- 🔥 눈동자 -->
+        <svg viewBox="0 0 1102 773">
+            <circle id="pupil" cx="603" cy="391" r="111" fill="black" />
+            <circle cx="606" cy="391" r="46" fill="white" />
+        </svg>
+
+        <!-- 눈꺼풀 (새로 준 path) -->
+        <svg width="1102" height="773" viewBox="0 0 1102 773">
+            <path id="eyelid-top"
+                d="M239 323.745L320.967 262.218L498.563 240L701.773 262.218L799.109 299.818L864 308.364L799.109 334L717.142 299.818L508.809 270.764L334.628 286.145L283.399 315.2L239 323.745Z"
+                fill="#FFE8E1" />
+        </svg>
+
+        <!-- 🔥 윗 속눈썹 -->
+        <svg viewBox="0 0 1102 773">
+            <path id="upper-lash"
+                d="M239 348.745L320.967 287.218L498.563 265L701.773 287.218L799.109 324.818L864 333.364L799.109 359L717.142 324.818L508.809 295.764L334.628 311.145L283.399 340.2L239 348.745Z"
+                fill="black" />
+        </svg>
+
+        <!-- 상하반전 속눈썹 -->
+        <svg viewBox="0 0 1102 773">
+            <path id="upper-lash-flip" d="M239 348.745L320.967 287.218..." fill="black"
+                transform="scale(1,-1) translate(0,-773)" />
+        </svg>
+
+
+
+
+    </div>
+
+</body>
+
+</html>
