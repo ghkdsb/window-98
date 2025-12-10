@@ -14,6 +14,224 @@ body,
     cursor: url("./img/cursor.png") 0 0, auto !important;
 }
 
+
+#bootScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    animation: bootFade 4.5s forwards;
+}
+
+#bootScreen.boot-normal {
+    background: url("./img/window_bg.png") center/cover no-repeat;
+}
+
+/* 종료 애니메이션 */
+#bootScreen.boot-shutdown {
+    background: url("./img/shutdown_bg.png") center/cover no-repeat;
+}
+
+/* 종료 후 검은 화면 */
+#blackScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    display: none;
+    z-index: 999999;
+}
+
+/* 공통 클로버 */
+#bootScreen.clover {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 클로버 공통으로 위치 바꿀 수 있음 */
+#bootScreen .windowClover1,
+#bootScreen .windowClover2,
+#bootScreen .windowClover3,
+#bootScreen .windowClover4,
+#bootScreen .windowClover5,
+#bootScreen .windowClover6,
+#bootScreen .windowClover7 {
+    position: absolute;
+    transform: translate(-50%, -25%);
+}
+
+/* 각각 위치 */
+.windowClover7 {
+    animation: clover7 2s forwards infinite;
+    top: 200px;
+    left: 710px;
+}
+
+.windowClover6 {
+    animation: clover6 1.8s forwards infinite;
+    top: 235px;
+    left: 740px;
+}
+
+.windowClover5 {
+    animation: clover5 1.6s forwards infinite;
+    top: 270px;
+    left: 780px;
+}
+
+.windowClover4 {
+    animation: clover4 1.4s forwards infinite;
+    top: 300px;
+    left: 825px;
+}
+
+.windowClover3 {
+    animation: clover3 1.2s forwards infinite;
+    top: 320px;
+    left: 872px;
+}
+
+.windowClover2 {
+    animation: clover2 1s forwards infinite;
+    top: 332px;
+    left: 921px;
+}
+
+.windowClover1 {
+    top: 350px;
+    left: 1045px;
+}
+
+#bootLogo {
+    width: 360px;
+    animation: logoFade 3s ease forwards;
+}
+
+@keyframes logoFade {
+    0% {
+        opacity: 0;
+        transform: scale(.8)
+    }
+
+    30% {
+        opacity: 1;
+        transform: scale(1)
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-200px)
+    }
+}
+
+
+@keyframes clover7 {
+
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .2;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes clover6 {
+
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .2;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes clover5 {
+
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .2;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes clover4 {
+
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .2;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes clover3 {
+
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .2;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes clover2 {
+
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .2;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
+
+
 /* --- 내 컴퓨터 아이콘 --- */
 .program {
     position: absolute;
@@ -89,17 +307,58 @@ body,
     z-index: 1;
 }
 
+
 /* 로딩중 모달창 크기 */
 .window-loading {
     width: 352px;
     height: 170px;
     position: fixed;
-    /* 화면에 고정 */
     top: 47%;
-    /* 화면 기준 중앙 */
     left: 50%;
     transform: translate(-50%, -50%);
-    /* 정확히 가운데 맞춤 */
+}
+
+/* 환영 모달창 크기 */
+.window-open {
+    width: 352px;
+    height: 170px;
+    position: fixed;
+    top: 30%;
+    left: 27%;
+    transform: translate(-50%, -50%);
+}
+
+/* 시스템종료 모달창 크기 */
+.window-system {
+    width: 405px;
+    height: 150px;
+    position: fixed;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+
+.system-btns button {
+    margin: 3rem 0rem 5rem 5rem;
+    background: #c0c0c0;
+    border-width: 2px;
+    border-style: solid;
+    /* 순서대로 위, 오른쪽, 아래, 왼쪽 */
+    border-color: #fff #000 #000 #fff;
+}
+
+.system-btns button:active {
+    border-color: #000 #fff #fff #000;
+    background: #b0b0b0;
+}
+
+#systemYes {
+    padding: 0 22px 0 22px;
+}
+
+#systemNo {
+    padding: 0 16px 0 16px;
 }
 
 .hidden {
@@ -108,7 +367,7 @@ body,
 
 /* --- 상단 파란색 바 --- */
 .window-title {
-    background: #000080;
+    background: linear-gradient(to right, #000080, #0776C8);
     color: white;
     border: 2px solid #c0c0c0;
     padding: 2px 2px 2px 7px;
@@ -124,7 +383,6 @@ body,
     background: #c0c0c0;
     border-width: 2px;
     border-style: solid;
-
     /* 순서대로 위, 오른쪽, 아래, 왼쪽 */
     border-color: #fff #000 #000 #fff;
     width: 22px;
@@ -133,11 +391,9 @@ body,
     cursor: pointer;
 }
 
-/* 눌렸을 때 (꾹 눌린 효과) */
 .close-btn:active {
     border-color: #000 #fff #fff #000;
     background: #b0b0b0;
-    /* 살짝 어둡게 */
 }
 
 .window-body {
@@ -183,7 +439,6 @@ body,
     background: #d9d9d9;
     border: 2px solid #7f7f7f;
     padding: 20px;
-    text-align: center;
     font-size: 14px;
 }
 
@@ -259,43 +514,34 @@ body,
     z-index: 10;
 }
 
-
-/* 🔹흰자/눈동자 움직임 제거 */
 .eye-white,
 .eyeball {
     animation: none !important;
 }
 
-
-/* 흰자 + 동공은 static (애니메이션 X) */
 .eye-white,
 .eyeball {
     animation: none !important;
 }
 
-/* 🔹 왼쪽 속눈썹 */
 .eyelash-left {
     transform-origin: top center;
     animation: lash-left 3s infinite ease-in-out;
 }
 
-/* 🔹 오른쪽 속눈썹 */
 .eyelash-right {
     transform-origin: top center;
     animation: lash-right 3s infinite ease-in-out;
 }
 
-/* 🔹 눈살 */
 .eye-wrinkle-left,
 .eye-wrinkle-right {
     transform-origin: center;
     animation: wrinkle-blink 3s infinite ease-in-out;
 }
 
-/* -------------------- 애니메이션 정의 -------------------- */
 
-
-/* ========= 모든 눈 요소 공통 키프레임 ========= */
+/* -- 눈 공통 애니메이션 -- */
 @keyframes blinkSync {
 
     0%,
@@ -305,7 +551,7 @@ body,
         transform: translateY(0) scaleY(1);
     }
 
-    /* 1차 감기 */
+    /* 한 번 감음 */
     4% {
         transform: translateY(var(--drop)) scaleY(var(--flip));
     }
@@ -314,7 +560,7 @@ body,
         transform: translateY(0) scaleY(1);
     }
 
-    /* 2차 감기 */
+    /* 두 번 감음 */
     10% {
         transform: translateY(var(--drop)) scaleY(var(--flip));
     }
@@ -324,40 +570,32 @@ body,
     }
 }
 
-/* ========= 속눈썹 ========= */
 .eyelash-left,
 .eyelash-right {
     transform-origin: top center;
     animation: blinkSync 6s infinite ease-in-out;
 }
 
-/* 왼쪽 속눈썹 전용 속성 */
 .eyelash-left {
     --drop: 75px;
     --flip: -1;
-    /* 뒤집힘 유지 */
+    /* 눈썹 뒤집혀야 돼서 -1 */
 }
 
-/* 오른쪽 속눈썹 전용 속성 */
 .eyelash-right {
     --drop: 80px;
     --flip: -1;
     transform: translateX(4px);
-    /* 위치 미세조정 */
 }
 
-/* ========= 눈살 ========= */
 .eye-wrinkle-left,
 .eye-wrinkle-right {
     animation: blinkSync 6s infinite ease-in-out;
     --drop: 22px;
-    /* 내려가는 깊이 */
     --flip: 1;
-    /* 눈살은 뒤집히면 안되므로 그대로 */
+    /* 눈살은 뒤집히면 안되니까 1 */
 }
 
-
-/* 공통 */
 .hidden {
     display: none;
 }
@@ -369,26 +607,20 @@ body,
     top: 80%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     width: 730px;
-    /* 설명창.png 크기에 맞게 조절 */
     height: 300px;
     background-image: url("./img/설명창.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     padding: 20px;
     z-index: 9999;
-    /* 캐릭터보다 앞 */
 }
 
-/* 텍스트(선택지) 스타일 */
 #gameText {
     font-size: 18px;
     font-weight: bold;
@@ -469,7 +701,6 @@ body,
 .seek-area input[type="range"] {
     -webkit-appearance: none;
     width: 250px;
-    /* 필요하면 조절 */
     height: 4px;
     background: #a9a9a9;
     border: 2px solid #dfdfdf;
@@ -479,28 +710,26 @@ body,
     position: relative;
 }
 
-/* 슬라이더 진행 바 */
+/* 슬라이더 바 */
 .seek-area input[type="range"]::-webkit-slider-runnable-track {
     height: 4px;
     background: #000;
-    /* 검정 라인 */
 }
 
-/* 슬라이더 버튼 (손잡이) */
+/* 슬라이더 버튼 */
 .seek-area input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 14px;
     height: 22px;
     background: #c0c0c0;
     border: 2px solid #fff;
-    /* 윗·왼쪽 밝게 */
+    /* 위, 왼쪽 */
     border-right-color: #000;
-    /* 오른쪽 진하게 */
+    /* 오른쪽 */
     border-bottom-color: #000;
-    /* 아래 진하게 */
+    /* 아래 */
     cursor: pointer;
     margin-top: -9px;
-    /* 세로 위치 맞추기 핵심 */
 }
 
 
@@ -524,7 +753,6 @@ body,
 .win-btn:active {
     border-color: #000 #fff #fff #000;
     background: #b0b0b0;
-    /* 살짝 어둡게 */
 }
 
 #stopBtn {
@@ -606,24 +834,21 @@ body,
     width: 100%;
     height: 100%;
     pointer-events: none;
-    /* 클릭 막기 */
     overflow: visible;
 }
 
-/* SVG <text> 음표 기본 스타일 */
+/* 음표 */
 .note-layer text.note {
     font-size: 26px;
     fill: #000;
     opacity: 1;
     transform-origin: center;
-    /* 더 레트로한 픽셀 느낌 원하면 font-family 변경 가능 */
     font-family: "DungGeunMo", sans-serif;
     text-anchor: middle;
     dominant-baseline: middle;
     will-change: transform, opacity;
 }
 
-/* 애니메이션: 위로 이동 + 사라짐 */
 @keyframes noteUp {
     0% {
         transform: translateY(0) scale(1);
@@ -641,7 +866,6 @@ body,
     }
 }
 
-/* 애니메이션 클래스 */
 .note-layer text.animate {
     animation: noteUp 1200ms ease-out forwards;
 }
@@ -649,10 +873,9 @@ body,
 
 
 
-/* ========================================= 만화모달창 =========================================== */
+/* ----------------------------------------- 만화모달창 ------------------------------------------- */
 
 
-/* 페이지 전환 기본 정의 */
 .comic-page {
     display: none;
     position: relative;
@@ -664,7 +887,6 @@ body,
     display: block;
 }
 
-/* 버튼 */
 .comic-buttons {
     display: flex;
 }
@@ -675,7 +897,6 @@ body,
     background: #c0c0c0;
     border-width: 2px;
     border-style: solid;
-
     /* 순서대로 위, 오른쪽, 아래, 왼쪽 */
     border-color: #fff #000 #000 #fff;
 }
@@ -685,13 +906,11 @@ body,
     background: #b0b0b0;
 }
 
-/* ================= 레이어 ================= */
 .comic-bg {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    /* 필요하면 조절 */
 }
 
 .josuke {
@@ -702,12 +921,10 @@ body,
 
 }
 
-/* ================= 눈 깜빡 애니메이션 ================= */
 .josuke-eye {
     position: absolute;
     width: 40px;
     height: 40px;
-    /* SVG크기 다르면 조절 */
     animation: blink 2.5s infinite;
     transform-origin: center;
 }
@@ -740,16 +957,13 @@ body,
     }
 }
 
-/* ================= 일본어 효과음 ================= */
+/* -- 일본어 효과음 -- */
 .effect-wrap {
     position: absolute;
     top: 56px;
-    /* 너가 조절*/
     left: -2px;
-    /* 너가 조절*/
 }
 
-/* 모든 SVG 기본 */
 .effect {
     position: absolute;
     top: 19px;
@@ -757,26 +971,26 @@ body,
     opacity: 0;
 }
 
-/* ------- 애니메이션 개별 적용 -------- */
 
-/* 두 = 고정 + 살짝 튀는 느낌만 */
+/* ------- 애니메이션 -------- */
+
+/* 두 */
 .e-du {
     animation: duStay 1.7s ease-out infinite;
 }
 
-/* 우 = 오른쪽으로 튀어나감 */
+/* 우 */
 .e-u {
     animation: uMove 1.7s ease-out infinite;
     animation-delay: .1s;
 }
 
-/* 웅 = 더 멀리 튀어나감 */
+/* 웅 */
 .e-ung {
     animation: ungMove 1.7s ease-out infinite;
     animation-delay: .2s;
 }
 
-/* ===== KEYFRAMES ===== */
 
 @keyframes duStay {
     0% {
@@ -865,12 +1079,10 @@ body,
 
 }
 
-/* ================= 눈 깜빡 애니메이션 ================= */
 .giorno-eye {
     position: absolute;
     width: 40px;
     height: 40px;
-    /* SVG크기 다르면 조절 */
     animation: blink 3s infinite;
     transform-origin: center;
 }
@@ -903,23 +1115,19 @@ body,
     }
 }
 
-/* ================= 반짝이 ================= */
+/* -- 반짝이 -- */
 .effect-twinkle {
     position: absolute;
     top: 56px;
     left: -2px;
 }
 
-/* ------- 애니메이션 개별 적용 -------- */
-
-/* 두 = 고정 + 살짝 튀는 느낌만 */
 .twinkle-a {
     animation: twinkleMove 1.7s ease-out infinite;
     top: 25px;
     left: 265px;
 }
 
-/* 우 = 오른쪽으로 튀어나감 */
 .twinkle-b {
     animation: twinkleMove 1.7s ease-out infinite;
     animation-delay: .1s;
@@ -927,7 +1135,6 @@ body,
     left: 30px;
 }
 
-/* 웅 = 더 멀리 튀어나감 */
 .twinkle-c {
     animation: twinkleMove 1.7s ease-out infinite;
     animation-delay: .2s;
@@ -942,7 +1149,6 @@ body,
     left: 322px;
 }
 
-/* 웅 = 더 멀리 튀어나감 */
 .twinkle-d {
     animation: twinkleMove 1.7s ease-out infinite;
     animation-delay: .2s;
@@ -971,7 +1177,6 @@ body,
     left: 735px;
 }
 
-/* ===== KEYFRAMES ===== */
 
 @keyframes twinkleMove {
     0% {
@@ -1025,12 +1230,10 @@ body,
 
 }
 
-/* ================= 눈 깜빡 애니메이션 ================= */
 .kakyoin-eye {
     position: absolute;
     width: 40px;
     height: 40px;
-    /* SVG크기 다르면 조절 */
     animation: blink 2.5s infinite;
     transform-origin: center;
 }
@@ -1044,6 +1247,14 @@ body,
 .kakyoin-right-eye {
     top: 414px;
     left: 165px;
+}
+
+.kakyoin-sunglasses1 {
+    position: relative;
+    top: 443px;
+    left: 107px;
+    animation: sunglasses 2.5s infinite;
+    transform-origin: left;
 }
 
 .kakyoin-sunglasses {
@@ -1087,43 +1298,33 @@ body,
 
 
 
-/* ================= 일본어 효과음 ================= */
+/* -- 일본어 효과음 -- */
 .effect-black-do {
     position: absolute;
     top: 30px;
-    /* 너가 조절*/
     left: 20px;
-    /* 너가 조절*/
 }
 
 
-
-/* ------- 애니메이션 개별 적용 -------- */
-
-/* 두 = 고정 + 살짝 튀는 느낌만 */
 .black-do1 {
     animation: blackDo1 3s ease-out infinite;
 }
 
-/* 우 = 오른쪽으로 튀어나감 */
 .black-do2 {
     animation: blackDo2 3s ease-out infinite;
     animation-delay: .2s;
 }
 
-/* 웅 = 더 멀리 튀어나감 */
 .black-do3 {
     animation: blackDo3 3s ease-out infinite;
     animation-delay: .4s;
 }
 
-/* 웅 = 더 멀리 튀어나감 */
 .black-do4 {
     animation: blackDo4 3s ease-out infinite;
     animation-delay: .6s;
 }
 
-/* ===== KEYFRAMES ===== */
 
 @keyframes blackDo1 {
     0% {
@@ -1197,43 +1398,34 @@ body,
 .effect-white-do {
     position: absolute;
     top: 185px;
-    /* 너가 조절*/
     left: -1px;
-    /* 너가 조절*/
 }
 
-
-/* 두 = 고정 + 살짝 튀는 느낌만 */
 .white-do1 {
     animation: whiteDo1 3s ease-out infinite;
     animation-delay: .8s;
 }
 
-/* 우 = 오른쪽으로 튀어나감 */
 .white-do2 {
     animation: whiteDo2 3s ease-out infinite;
     animation-delay: 1s;
 }
 
-/* 웅 = 더 멀리 튀어나감 */
 .white-do3 {
     animation: whiteDo3 3s ease-out infinite;
     animation-delay: 1.2s;
 }
 
-/* 웅 = 더 멀리 튀어나감 */
 .white-do4 {
     animation: whiteDo4 3s ease-out infinite;
     animation-delay: 1.4s;
 }
 
-/* 웅 = 더 멀리 튀어나감 */
 .white-do5 {
     animation: whiteDo5 3s ease-out infinite;
     animation-delay: 1.6s;
 }
 
-/* ===== KEYFRAMES ===== */
 
 @keyframes whiteDo1 {
     0% {
@@ -1325,7 +1517,7 @@ body,
 
 
 
-/* ================================= 로딩중 ======================================= */
+/* ---------------------------------------- 로딩중 ---------------------------------------- */
 #loadingBar {
     margin-top: 3rem;
     margin-left: 1rem;
@@ -1335,11 +1527,9 @@ body,
     fill: #000080;
     opacity: 0;
     animation: loadBlink 1.2s infinite linear;
-    /* ⬅ 1.2s → 2.5s 로 느리게 */
     animation-fill-mode: backwards;
 }
 
-/* 🔽 칸 딜레이 천천히 진행되도록 늦춰줌 */
 #loadingBar .block:nth-child(1) {
     animation-delay: 0s;
 }
@@ -1392,7 +1582,7 @@ body,
     animation-delay: 1.2s;
 }
 
-/* 부드러운 숨쉬는 느낌 유지 */
+
 @keyframes loadBlink {
     0% {
         opacity: 0;
@@ -1512,25 +1702,21 @@ body,
 
 
 
+/* ----- 클리피 애니메이션 ----- */
 
 .clippy-wrapper {
     position: fixed;
     right: 2vw;
-    /* 반응형 위치 */
     bottom: 2vh;
-    /* 반응형 위치 */
     width: fit-content;
     height: fit-content;
-    /* z-index: 9999; */
     pointer-events: none;
-    /* 필요하면 제거 */
 }
 
 /* ----- 클리피 말풍선 ----- */
 .clippy-balloon {
     position: absolute;
     top: -73%;
-    /* 클리피 위에 위치하도록 */
     right: 36%;
     pointer-events: auto;
 }
@@ -1574,9 +1760,6 @@ body,
     left: 1290px;
 }
 
-
-
-/* ---------- 레이어 순서 ---------- */
 .clippy-note {
     position: absolute;
     z-index: 1;
@@ -1617,7 +1800,6 @@ body,
     z-index: 6;
 }
 
-/* ---------- 위치 조절 구역 (네가 마음대로 수정 가능) ---------- */
 .clippy-body {
     top: -30px;
     left: 85px;
@@ -1653,7 +1835,6 @@ body,
     left: 144px;
 }
 
-/* ---------- 몸통 애니메이션 (팔처럼 구부러지도록) ---------- */
 .clippy-body,
 .clippy-shadow {
     animation: clippy-body-bend 3s ease-in-out infinite;
@@ -1668,7 +1849,6 @@ body,
         transform: rotate(6deg);
     }
 
-    /* 오른쪽으로 구부러짐 */
     100% {
         transform: rotate(0deg);
     }
@@ -1692,11 +1872,9 @@ body,
     96% {
         transform: scaleY(0.1);
     }
-
-    /* 찡그리듯 */
 }
 
-/* ---------- 눈동자 미세 움직임 ---------- */
+/* ---------- 눈동자 움직임 ---------- */
 .clippy-eyeball-left,
 .clippy-eyeball-right {
     animation: clippy-eye-move 3s ease-in-out infinite;
@@ -1716,7 +1894,7 @@ body,
     }
 }
 
-/* ---------- 눈썹 살짝 들썩임 ---------- */
+/* ---------- 눈썹 ---------- */
 .clippy-eyebrow-left,
 .clippy-eyebrow-right {
     animation: clippy-eyebrow-bounce 3.5s infinite;

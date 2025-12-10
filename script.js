@@ -1,4 +1,38 @@
-/* 시작 메뉴 */
+function startBoot(isShutdown = false) {
+    const boot = document.getElementById("bootScreen");
+    const black = document.getElementById("blackScreen");
+
+    black.style.display = "none";
+
+    boot.classList.remove("hidden", "boot-normal", "boot-shutdown");
+
+    if (isShutdown) {
+        boot.classList.add("boot-shutdown");
+    } else {
+        boot.classList.add("boot-normal");
+    }
+
+    boot.style.display = "flex";
+    boot.style.opacity = "1";
+
+    // 종료 부팅일 경우 > 검은화면 유지됨
+    if (isShutdown) {
+        setTimeout(() => {
+            black.style.display = "block";
+        }, 4500);
+    } else {
+    // 정상 부팅일 경우 > 사이트 들어가짐
+        setTimeout(() => {
+            boot.style.display = "none";
+        }, 4500);
+    }
+}
+
+// 페이지 첫 부팅
+window.addEventListener("load", () => startBoot(false));
+
+
+// 시작 메뉴 
 const startBtn = document.getElementById("startButton");
 const startImg = document.getElementById("startImg");
 const startMenu = document.getElementById("startMenu");
@@ -51,15 +85,41 @@ myComputer.addEventListener("click", () => {
     randomizePosition(computerWindow);
     // 모달창이 같은 곳에서 생성되는 문제 때문에 가려져서 안 보임
     // 랜덤하게 생성되는 코드
+    playBGM(); 
 });
 
 closeComputer.addEventListener("click", () => {
     computerWindow.classList.add("hidden");
+    stopBGM();
 });
 
 
 
-/* -------------------- 🎮 선택지 기반 유진 게임 -------------------- */
+/* -------------------- 선택형 게임 -------------------- */
+
+const clickSound = document.getElementById("clickSound");
+const bgm = document.getElementById("bgmSound");
+
+function playClick() {
+    clickSound.currentTime = 0;
+    clickSound.play();
+}
+
+function playBGM() {
+    bgm.volume = 0.2; // 볼륨 조절
+    bgm.play();
+}
+
+function stopBGM() {
+    bgm.pause();
+    bgm.currentTime = 0;
+}
+
+document.addEventListener("click", (e) => {
+    if (e.target.tagName === "P" || e.target.classList.contains("nextBtn")) {
+        playClick();
+    }
+});
 
 let score = 0;
 
@@ -124,7 +184,7 @@ function step2_3() {
     next(() => step3());
 }
 
-/* ---------------------- 3 ---------------------- */
+/* ---------------------- 3단계 ---------------------- */
 function step3() {
     gameText.textContent = "유진 : 배고픈데 밥이나 같이 먹을래? 뭐 먹을까?";
     choiceBox.innerHTML = `
@@ -134,7 +194,7 @@ function step3() {
     `;
 }
 
-/* ---------------------- 4 ---------------------- */
+/* ---------------------- 4단계 ---------------------- */
 function step4() {
     gameText.textContent = "유진 : 밥 먹으니까 디저트 땡기지 않냐?";
     choiceBox.innerHTML = `
@@ -144,7 +204,7 @@ function step4() {
     `;
 }
 
-/* ---------------------- 5 ---------------------- */
+/* ---------------------- 5단계 ---------------------- */
 function step5() {
     gameText.textContent = "유진 : 있잖아.. 나 달라진거 없어?";
     choiceBox.innerHTML = `
@@ -157,7 +217,7 @@ function step5() {
 /* ---------------------- 엔딩 ---------------------- */
 function ending() {
     let txt = "";
-    if (score < 30) txt = "⊗ 최악 새드엔딩... ⊗";
+    if (score < 30) txt = "⊗ 최악 배드엔딩... ⊗";
     else if (score < 80) txt = "،،̲ 그럭저럭... ،،̲";
     else txt = "❤︎ ❤︎ 초초초 해피엔딩!!! ❤︎ ❤︎";
 
@@ -171,23 +231,24 @@ function fail() {
     choiceBox.innerHTML = `<p onclick="resetGame()">다시시작</p>`;
 }
 
-/* ---------------------- 공통 대사 → 다음 버튼 생성 ---------------------- */
+/* ---------------------- > 버튼 생성 ---------------------- */
 function next(stepFunc) {
     choiceBox.innerHTML = `<p class="nextBtn"> > </p>`;
     document.querySelector(".nextBtn").onclick = stepFunc;
 }
 
-// 프로그램 창 X 버튼
+// 프로그램 창 X 버튼 누르면 다 리셋되는 거
 document.getElementById("closeComputer").addEventListener("click", () => {
-    resetGame(); // 게임 점수·텍스트·선택지 리셋
-    document.getElementById("computerWindow").classList.add("hidden"); // 창 닫기
+    resetGame();
+    document.getElementById("computerWindow").classList.add("hidden");
 });
 
 
 
 
 
-/* --------- 피아노 모달창 --------- */
+/* ------------------------------------- 피아노 모달창 ------------------------------------- */
+
 const myPiano = document.getElementById("myPiano");
 const pianoWindow = document.getElementById("pianoWindow");
 const closePiano = document.getElementById("closePiano");
@@ -249,28 +310,22 @@ pianoKeys.forEach(k =>
 document.addEventListener("keydown", e => playSound(e.key));
 
 
-// 피아노 svg 파트
-// --- SVG 노트 레이어 선택 (페이지 로드 후 한 번만)
 const pianoNotesSvg = document.getElementById("pianoNotes");
 
-/**
- * spawnNoteAtElement(elem, char)
- * elem: DOM element (건반)
- * char: 표시할 문자(예: "♪")
- */
+
+// elem: 건반
+// char: ♪
 function spawnNoteAtElement(elem, char = "♪") {
     if (!pianoNotesSvg || !elem) return;
 
-    // 요소의 위치를 SVG 기준으로 계산
     const svgRect = pianoNotesSvg.getBoundingClientRect();
     const keyRect = elem.getBoundingClientRect();
 
-    // x: 건반의 글자 위치(가운데), y: 건반 하단 텍스트 바로 위
+
     const x = (keyRect.left - svgRect.left) + (keyRect.width / 2);
-    // y: 건반 내부 글자(아래쪽) 위치 => 약간 위로 조정
     const y = (keyRect.top - svgRect.top) + (keyRect.height * 0.75);
 
-    // SVG <text> 생성
+    // text 생성
     const ns = "http://www.w3.org/2000/svg";
     const t = document.createElementNS(ns, "text");
     t.setAttribute("class", "note");
@@ -278,11 +333,8 @@ function spawnNoteAtElement(elem, char = "♪") {
     t.setAttribute("y", y);
     t.textContent = char;
 
-    // append 후, trigger 애니메이션 클래스
     pianoNotesSvg.appendChild(t);
 
-    // force reflow(안정적으로 애니메이션 시작)
-    // eslint-disable-next-line no-unused-expressions
     t.getBoundingClientRect();
 
     t.classList.add("animate");
@@ -290,7 +342,7 @@ function spawnNoteAtElement(elem, char = "♪") {
     // 애니메이션 끝나면 제거
     setTimeout(() => {
         t.remove();
-    }, 1300); // CSS 애니메이션 길이(1200ms)보다 약간 여유있게
+    }, 1300);
 }
 
 
@@ -298,7 +350,7 @@ function spawnNoteAtElement(elem, char = "♪") {
 
 
 
-/* --------- 음악 모달창 --------- */
+/* ------------------------------------- 음악 모달창 ------------------------------------- */
 const myMusic = document.getElementById("myMusic");
 const musicWindow = document.getElementById("musicWindow");
 const closeMusic = document.getElementById("closeMusic");
@@ -317,21 +369,21 @@ const select = document.getElementById("musicSelect");
 const albumImg = document.getElementById("albumImage");
 const slider = document.getElementById("musicSlider");
 
-// 모달창 열릴 때 첫 화면 앨범커버1
+// 모달창 열릴 때 첫 화면으로 무조건 music1
 function initMusic() {
     const num = select.value; // 기본값 1
-    albumImg.src = `./img/앨범커버${num}.png`;
-    audio.src = `./music/앨범커버${num}.mp3`;
+    albumImg.src = `./img/music${num}.png`;
+    audio.src = `./music/music${num}.mp3`;
     audio.pause();
     audio.currentTime = 0;
 }
 initMusic(); // 모달창 열릴 때 실행될 수 있도록
 
-// 드롭다운 선택 시 바뀜
+// 드롭다운 선택 시 앨범 사진 바뀜
 select.addEventListener("change", () => {
     const num = select.value;
-    albumImg.src = `./img/앨범커버${num}.png`;
-    audio.src = `./music/앨범커버${num}.mp3`;
+    albumImg.src = `./img/music${num}.png`;
+    audio.src = `./music/music${num}.mp3`;
     audio.pause();
     audio.currentTime = 0;
 });
@@ -346,7 +398,7 @@ slider.addEventListener("input", () => {
     audio.currentTime = (slider.value / 100) * audio.duration;
 });
 
-// 재생 / 일시정지 / 노래초기화
+// 재생 / 일시정지 / 정지
 document.getElementById("playBtn").onclick = () => audio.play();
 document.getElementById("pauseBtn").onclick = () => audio.pause();
 document.getElementById("stopBtn").onclick = () => {
@@ -367,7 +419,7 @@ document.getElementById("closeMusic").onclick = () => {
 
 
 
-/* --------- 만화 모달창 --------- */
+/* ------------------------------------- 만화 모달창 ------------------------------------- */
 const myComics = document.getElementById("myComics");
 const comicsWindow = document.getElementById("comicsWindow");
 const closeComics = document.getElementById("closeComics");
@@ -394,7 +446,7 @@ document.querySelectorAll(".comic-btn").forEach(btn => {
 
 
 
-/* --------- 농구 모달창 --------- */
+/* ------------------------------------- 농구 모달창 ------------------------------------- */
 const myBall = document.getElementById("myBall");
 const ballWindow = document.getElementById("ballWindow");
 const closeBall = document.getElementById("closeBall");
@@ -497,7 +549,7 @@ closeBall.addEventListener("click", () => {
 
 
 
-/* --------- 사이트로딩중 모달창 --------- */
+/* ------------------------------------- 사이트로딩중 모달창 ------------------------------------- */
 const myLoading = document.getElementById("myLoading");
 const loadingWindow = document.getElementById("loadingWindow");
 const closeLoading = document.getElementById("closeLoading");
@@ -509,9 +561,21 @@ closeLoading.addEventListener("click", () => {
 
 
 
+/* ------------------------------------- 환영 모달창 ------------------------------------- */
+const myOpen = document.getElementById("myOpen");
+const openWindow = document.getElementById("openWindow");
+const closeOpen = document.getElementById("closeOpen");
 
 
-/* --------- 내 프로필 모달창 --------- */
+closeOpen.addEventListener("click", () => {
+    openWindow.classList.add("hidden");
+});
+
+
+
+
+
+/* ------------------------------------- 내 프로필 모달창 ------------------------------------- */
 const programWindow = document.getElementById("programWindow");
 const openProgram = document.getElementById("openProgram");
 const closeProgram = document.getElementById("closeProgram");
@@ -524,6 +588,45 @@ if (openProgram) {
 
 closeProgram.addEventListener("click", () => {
     programWindow.classList.add("hidden");
+});
+
+
+
+/* ------------------------------------- 시스템종료 모달창 ------------------------------------- */
+const systemWindow = document.getElementById("systemWindow");
+const openSystem = document.getElementById("openSystem");
+const closeSystem = document.getElementById("closeSystem");
+const systemYes = document.getElementById("systemYes"); 
+const systemNo = document.getElementById("systemNo"); 
+
+if (openSystem) {
+    openSystem.addEventListener("click", () => {
+        systemWindow.classList.remove("hidden");
+    });
+}
+
+closeSystem.addEventListener("click", () => {
+    systemWindow.classList.add("hidden");
+});
+
+/* -------- 부팅 애니메이션 재생 -------- */
+systemYes.addEventListener("click", () => {
+    systemWindow.classList.add("hidden");
+    startBoot(true); 
+});
+
+
+
+// 취소 버튼 
+systemNo.addEventListener("click", () => {
+    systemWindow.classList.add("hidden");
+});
+
+// 예 버튼
+systemYes.addEventListener("click", () => {
+    systemWindow.classList.add("hidden");
+    startBoot(true);
+
 });
 
 
@@ -562,6 +665,8 @@ makeDraggable(musicTitle, musicWindow);
 makeDraggable(comicsTitle, comicsWindow);
 makeDraggable(ballTitle, ballWindow);
 makeDraggable(loadingTitle, loadingWindow);
+makeDraggable(openTitle, openWindow);
+makeDraggable(systemTitle, systemWindow);
 makeDraggable(document.getElementById("computerTitle"), computerWindow);
 makeDraggable(document.getElementById("programTitle"), programWindow);
 
